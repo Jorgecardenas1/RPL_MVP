@@ -1,0 +1,86 @@
+{
+  "projects": {
+    "Eleven": {
+      "description": ""
+    },
+    "Quantum Sensors": {
+      "description": "Exploring entangled states."
+    },
+    "Conformal Metasurfaces": {
+      "description": "Develop curved surfaces",
+      "created_at": "2025-05-22T01:25:07.668392",
+      "experiments": []
+    },
+    "history AI": {
+      "description": "",
+      "created_at": "2025-05-22T17:51:07.296604",
+      "experiments": [
+        {
+          "timestamp": "2025-05-22T17:51:35.726600",
+          "project": "history AI",
+          "results_file": null,
+          "version": "v1"
+        }
+      ]
+    },
+    "metasurfaces": {
+      "description": "",
+      "created_at": "2025-05-22T17:51:56.033086",
+      "experiments": []
+    },
+    "conformal MS": {
+      "description": "",
+      "created_at": "2025-05-22T17:52:11.600341",
+      "experiments": [
+        {
+          "timestamp": "2025-05-22T17:52:48.976508",
+          "project": "conformal MS",
+          "results_file": null,
+          "version": "v1"
+        }
+      ]
+    },
+    "...": {
+      "description": "",
+      "created_at": "2025-05-22T18:05:26.238862",
+      "experiments": []
+    },
+    "ai metasurfaces": {
+      "description": "",
+      "created_at": "2025-05-22T18:05:53.662788",
+      "experiments": [
+        {
+          "timestamp": "2025-05-22T18:06:57.338419",
+          "project": "ai metasurfaces",
+          "results_file": null,
+          "version": "v1"
+        }
+      ]
+    }
+  },
+  "experiments": [
+    {
+      "project": "Quantum Sensors",
+      "file": "s21.csv",
+      "notes": ""
+    },
+    {
+      "timestamp": "2025-05-22T17:51:35.726600",
+      "project": "history AI",
+      "results_file": null,
+      "version": "v1"
+    },
+    {
+      "timestamp": "2025-05-22T17:52:48.976508",
+      "project": "conformal MS",
+      "results_file": null,
+      "version": "v1"
+    },
+    {
+      "timestamp": "2025-05-22T18:06:57.338419",
+      "project": "ai metasurfaces",
+      "results_file": null,
+      "version": "v1"
+    }
+  ]
+}
