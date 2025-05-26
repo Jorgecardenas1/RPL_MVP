@@ -17,7 +17,7 @@ ICON_SVG = {
     "assistant": "🤖",
 }
 
-with open("./logo2.png", "rb") as img_file:
+with open("static/logo2.png", "rb") as img_file:
     b64_string = base64.b64encode(img_file.read()).decode()
 
 # Custom CSS for VSCode-like look
@@ -285,7 +285,7 @@ st.markdown(
 
 # --- SIDEBAR: Projects and Experiments ---
 with st.sidebar:
-    st.image("./logo2.png", width=100)
+    st.image("static/logo2.png", width=100)
     st.title("📁 Projects")
 
     all_projects = store.data.get("projects", {})
