@@ -20,7 +20,12 @@ class IntentDetector:
                 {"role": "system", "content": """
     You are an assistant that detects user intent and extracts structured data.
     Intents: create_project, log_experiment, upload_file, other.
-    Return JSON like: {"intent": "...", "data": {...}}
+    Return JSON like: {"intent": "...", "data": {...}}.
+                 The "data" field should contain:
+                - For create_project: {"name": "...", "description": "..."}
+                - For log_experiment: {"project": "...", "experiment_name", "description": "...", "results": "...", "version": "..."}
+                - For upload_file: {"project": "...", "file_name": "...", "experiment_name": "..."}
+                - For other: {"message": "..."} if no intent is detected.
     """     },
                 {"role": "user", "content": user_input}
             ],

@@ -38,19 +38,64 @@ class KnowledgeStore:
         """Check if a project already exists by name."""
         return name in self.data.get("projects", {})
 
-    def log_experiment(self, project, results_file, version=None):
+
+
+    def log_experiment(self, project, description="",results="",name="", results_file=None, version="v1", timestamp=None):
         if project not in self.data["projects"]:
             return {"status": "error", "message": f"Project '{project}' not found."}
 
-        experiment_entry = {
-            "timestamp": datetime.utcnow().isoformat(),
+        entry = {
+            "timestamp": timestamp or datetime.utcnow().isoformat(),
             "project": project,
-            "results_file": results_file,
-            "version": version or "v1"
+            "name": name,
+            "description": description,
+            "version": version,
+            "results": results
         }
 
-        self.data["projects"][project]["experiments"].append(experiment_entry)
-        self.data["experiments"].append(experiment_entry)
+        if results_file:
+            entry["results_file"] = results_file
+
+        self.data["projects"][project]["experiments"].append(entry)
+        self.data["experiments"].append(entry)
         self._save(self.data)
 
         return {"status": "success", "message": f"Experiment logged to '{project}'."}
+
+
+    def link_file_to_project(self, project, file_name):
+        if project not in self.data["projects"]:
+            return {"status": "error", "message": f"Project '{project}' not found."}
+
+        # Add the file name to the latest experiment or to project metadata
+        self.data["projects"][project].setdefault("files", []).append({
+            "file_name": file_name,
+            "timestamp": datetime.utcnow().isoformat()
+        })
+        self._save(self.data)
+
+        return {"status": "success", "message": f"File '{file_name}' linked to '{project}'."}
+
+    def link_file_to_experiment(self, project, experiment_name, file_name):
+        if project not in self.data["projects"]:
+            return {"status": "error", "message": f"Project '{project}' not found."}
+
+        for exp in self.data["projects"][project]["experiments"]:
+            if exp.get("name") == experiment_name:
+                exp.setdefault("files", []).append({
+                    "file_name": file_name,
+                    "timestamp": datetime.utcnow().isoformat()
+                })
+                self._save(self.data)
+                return {"status": "success", "message": f"File '{file_name}' linked to experiment '{experiment_name}' in project '{project}'."}
+
+        return {"status": "error", "message": f"Experiment '{experiment_name}' not found in project '{project}'."}
+
+    def get_latest_experiment(self, project):
+        if project not in self.data["projects"]:
+            return None
+
+        experiments = self.data["projects"][project].get("experiments", [])
+        if experiments:
+            return experiments[-1]  # latest experiment
+        return None

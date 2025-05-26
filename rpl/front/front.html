@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collaborative Research Dashboard | Ripple Copilot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-bg {
+            background-color: #161b22;
+        }
+        .main-bg {
+            background-color: #0d1117;
+        }
+        .card-bg {
+            background-color: #21262d;
+        }
+        .highlight-bg {
+            background-color: rgba(56, 139, 253, 0.15);
+        }
+        .tab-active {
+            border-bottom: 2px solid #58a6ff;
+            color: #58a6ff;
+        }
+        .typing-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background: #58a6ff;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .timeline-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 24px;
+            height: calc(100% - 24px);
+            width: 2px;
+            background-color: #30363d;
+        }
+        .chat-bubble {
+            max-width: 80%;
+            border-radius: 1rem;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+        .user-bubble {
+            background-color: #1f6feb;
+            color: white;
+            align-self: flex-end;
+        }
+        .ai-bubble {
+            background-color: #30363d;
+            color: white;
+            align-self: flex-start;
+        }
+        .copilot-bubble {
+            background-color: rgba(56, 139, 253, 0.2);
+            border-left: 3px solid #58a6ff;
+            align-self: flex-start;
+        }
+        .ripple-pulse {
+            animation: ripple 2s infinite;
+        }
+        @keyframes ripple {
+            0% {
+                box-shadow: 0 0 0 0 rgba(88, 166, 255, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(88, 166, 255, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(88, 166, 255, 0);
+            }
+        }
+    </style>
+</head>
+<body class="main-bg text-gray-100 h-screen overflow-hidden flex">
+    <!-- Sidebar -->
+    <div class="sidebar-bg w-16 flex-shrink-0 border-r border-gray-800 flex flex-col items-center py-4">
+        <div class="w-10 h-10 rounded-md bg-blue-600 flex items-center justify-center mb-6">
+            <i class="fas fa-users text-white"></i>
+        </div>
+        <div class="space-y-6 flex flex-col items-center">
+            <button class="text-white p-2 rounded-md bg-gray-800 bg-opacity-50">
+                <i class="fas fa-clipboard-list"></i>
+            </button>
+            <button class="text-gray-400 hover:text-white p-2 rounded-md">
+                <i class="fas fa-comments"></i>
+            </button>
+            <button class="text-gray-400 hover:text-white p-2 rounded-md">
+                <i class="fas fa-database"></i>
+            </button>
+            <button class="text-gray-400 hover:text-white p-2 rounded-md">
+                <i class="fas fa-chart-line"></i>
+            </button>
+        </div>
+        <div class="mt-auto">
+            <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center">
+                <i class="fas fa-user text-gray-400"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+        <!-- Top Bar -->
+        <div class="sidebar-bg border-b border-gray-800 px-4 py-2 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="text-sm font-medium">Research Project: AI Ethics Study</div>
+                <div class="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded">Phase 2: Data Collection</div>
+                <div class="flex items-center space-x-1">
+                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                    <span class="text-xs text-gray-400">3 collaborators online</span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button class="text-gray-400 hover:text-white">
+                    <i class="fas fa-user-plus"></i>
+                </button>
+                <button class="text-gray-400 hover:text-white">
+                    <i class="fas fa-bell"></i>
+                </button>
+                <button class="text-gray-400 hover:text-white">
+                    <i class="fas fa-ellipsis-h"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Area -->
+        <div class="flex-1 flex overflow-hidden">
+            <!-- Left Panel - Research Log -->
+            <div class="w-1/3 border-r border-gray-800 flex flex-col">
+                <div class="sidebar-bg px-4 py-3 border-b border-gray-800 flex items-center justify-between">
+                    <div class="text-sm font-medium">COLLABORATIVE LOG</div>
+                    <div class="flex space-x-2">
+                        <button class="text-gray-400 hover:text-white text-xs">
+                            <i class="fas fa-filter"></i>
+                        </button>
+                        <button class="text-gray-400 hover:text-white text-xs">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex-1 overflow-y-auto p-4">
+                    <div class="space-y-4">
+                        <!-- Timeline items -->
+                        <div class="relative timeline-item pl-6">
+                            <div class="absolute left-0 w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center">
+                                <i class="fas fa-user text-white text-xs"></i>
+                            </div>
+                            <div class="card-bg p-3 rounded border border-gray-800">
+                                <div class="flex justify-between items-start mb-1">
+                                    <div class="text-sm font-medium">Dr. Chen added survey results</div>
+                                    <div class="text-xs text-gray-400">Today, 10:45 AM</div>
+                                </div>
+                                <div class="text-xs text-gray-300 mb-2">
+                                    Uploaded survey responses from 50 participants. Preliminary analysis shows...
+                                </div>
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="text-xs bg-gray-800 text-blue-400 px-2 py-0.5 rounded">survey</span>
+                                    <span class="text-xs bg-gray-800 text-green-400 px-2 py-0.5 rounded">phase2</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="relative timeline-item pl-6">
+                            <div class="absolute left-0 w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center ripple-pulse">
+                                <i class="fas fa-robot text-white text-xs"></i>
+                            </div>
+                            <div class="copilot-bubble p-3 rounded">
+                                <div class="flex justify-between items-start mb-1">
+                                    <div class="text-sm font-medium text-blue-400">Ripple Copilot: Analysis Complete</div>
+                                    <div class="text-xs text-gray-400">Today, 11:30 AM</div>
+                                </div>
+                                <div class="text-xs text-gray-300 mb-2">
+                                    Completed statistical analysis on dataset A. Found significant correlation (p < 0.05) between...
+                                </div>
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="text-xs bg-blue-900 text-blue-300 px-2 py-0.5 rounded">analysis</span>
+                                    <span class="text-xs bg-blue-900 text-blue-300 px-2 py-0.5 rounded">stats</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="relative timeline-item pl-6">
+                            <div class="absolute left-0 w-6 h-6 rounded-full bg-purple-600 flex items-center justify-center">
+                                <i class="fas fa-user text-white text-xs"></i>
+                            </div>
+                            <div class="card-bg p-3 rounded border border-gray-800">
+                                <div class="flex justify-between items-start mb-1">
+                                    <div class="text-sm font-medium">Prof. Rodriguez added references</div>
+                                    <div class="text-xs text-gray-400">Yesterday, 3:22 PM</div>
+                                </div>
+                                <div class="text-xs text-gray-300 mb-2">
+                                    Added 5 new references to literature review section with annotations...
+                                </div>
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="text-xs bg-gray-800 text-purple-400 px-2 py-0.5 rounded">literature</span>
+                                    <span class="text-xs bg-gray-800 text-yellow-400 px-2 py-0.5 rounded">references</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 border-t border-gray-800">
+                    <div class="relative">
+                        <input type="text" placeholder="Add log entry or @mention collaborators..." 
+                               class="w-full card-bg text-sm text-white px-3 py-2 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 border border-gray-800">
+                        <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center Panel - Ripple Copilot Interface -->
+            <div class="flex-1 flex flex-col overflow-hidden border-r border-gray-800">
+                <div class="sidebar-bg px-4 py-3 border-b border-gray-800 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center ripple-pulse">
+                            <i class="fas fa-robot text-white"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm font-medium text-blue-400">RIPPLE COPILOT</div>
+                            <div class="text-xs text-gray-400">AI Research Assistant</div>
+                        </div>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button class="text-xs bg-blue-900 text-blue-300 px-2 py-1 rounded hover:bg-blue-800">
+                            <i class="fas fa-lightbulb mr-1"></i>Suggestions
+                        </button>
+                        <button class="text-xs bg-gray-800 text-gray-400 px-2 py-1 rounded hover:bg-gray-700">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex-1 overflow-auto p-4 flex flex-col">
+                    <!-- Chat messages -->
+                    <div class="flex-1 overflow-y-auto mb-4 space-y-3 flex flex-col">
+                        <!-- Ripple Copilot Message -->
+                        <div class="chat-bubble copilot-bubble">
+                            <div class="font-medium mb-1 flex items-center text-blue-400">
+                                <i class="fas fa-robot mr-2"></i>
+                                Ripple Copilot
+                            </div>
+                            <p>Hello research team! I'm your Ripple Copilot, here to help analyze data, suggest methodologies, and connect findings with relevant literature. How can I assist with your AI Ethics Study today?</p>
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                <button class="text-xs bg-blue-900 text-blue-300 px-2 py-1 rounded hover:bg-blue-800">
+                                    Analyze recent data
+                                </button>
+                                <button class="text-xs bg-blue-900 text-blue-300 px-2 py-1 rounded hover:bg-blue-800">
+                                    Review literature
+                                </button>
+                                <button class="text-xs bg-blue-900 text-blue-300 px-2 py-1 rounded hover:bg-blue-800">
+                                    Suggest next steps
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- User Message -->
+                        <div class="chat-bubble user-bubble">
+                            <div class="font-medium mb-1">You</div>
+                            <p>Can you analyze the survey results Dr. Chen just uploaded and compare them with our Phase 1 findings?</p>
+                        </div>
+                        
+                        <!-- Ripple Copilot Response -->
+                        <div class="chat-bubble copilot-bubble">
+                            <div class="font-medium mb-1 flex items-center text-blue-400">
+                                <i class="fas fa-robot mr-2"></i>
+                                Ripple Copilot
+                            </div>
+                            <p class="mb-2">Certainly! I've analyzed the new survey data and compared it with Phase 1 results. Here are the key insights:</p>
+                            <ul class="list-disc pl-5 mb-2">
+                                <li>Concern levels about AI decision-making have increased by 12% overall</li>
+                                <li>The 18-25 age group shows the most significant change (+18%)</li>
+                                <li>Phase 1's gender gap in concerns has narrowed in this round</li>
+                            </ul>
+                            <div class="mt-2">
+                                <button class="text-xs bg-blue-900 text-blue-300 px-2 py-1 rounded hover:bg-blue-800 mr-2">
+                                    <i class="fas fa-chart-bar mr-1"></i>Show comparison chart
+                                </button>
+                                <button class="text-xs bg-blue-900 text-blue-300 px-2 py-1 rounded hover:bg-blue-800">
+                                    <i class="fas fa-table mr-1"></i>View detailed table
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Collaborator Message -->
+                        <div class="chat-bubble ai-bubble">
+                            <div class="font-medium mb-1 flex items-center">
+                                <i class="fas fa-user mr-2"></i>
+                                Dr. Chen
+                            </div>
+                            <p>That's interesting! Can you also check if these trends align with the literature Prof. Rodriguez added yesterday?</p>
+                        </div>
+                        
+                        <!-- Ripple Copilot Response -->
+                        <div class="chat-bubble copilot-bubble">
+                            <div class="font-medium mb-1 flex items-center text-blue-400">
+                                <i class="fas fa-robot mr-2"></i>
+                                Ripple Copilot
+                            </div>
+                            <p>Good suggestion Dr. Chen. Cross-referencing with the new literature:</p>
+                            <ul class="list-disc pl-5 mb-2">
+                                <li>Johnson et al. (2022) similarly found increasing concerns among younger demographics</li>
+                                <li>The narrowing gender gap aligns with Peterson's 2023 meta-analysis</li>
+                                <li>One discrepancy: literature suggests higher education correlates with lower concern, but our data shows no significant correlation</li>
+                            </ul>
+                            <div class="mt-2">
+                                <button class="text-xs bg-blue-900 text-blue-300 px-2 py-1 rounded hover:bg-blue-800">
+                                    <i class="fas fa-file-alt mr-1"></i>Generate literature matrix
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat input -->
+                    <div class="card-bg rounded-lg border border-gray-800 p-3">
+                        <div class="flex items-center mb-2">
+                            <div class="text-xs text-gray-400 mr-2">Quick actions:</div>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="text-xs bg-blue-900 text-blue-300 px-2 py-1 rounded hover:bg-blue-800">
+                                    <i class="fas fa-chart-pie mr-1"></i>Analyze data
+                                </button>
+                                <button class="text-xs bg-blue-900 text-blue-300 px-2 py-1 rounded hover:bg-blue-800">
+                                    <i class="fas fa-book mr-1"></i>Find literature
+                                </button>
+                                <button class="text-xs bg-blue-900 text-blue-300 px-2 py-1 rounded hover:bg-blue-800">
+                                    <i class="fas fa-lightbulb mr-1"></i>Get insights
+                                </button>
+                                <button class="text-xs bg-blue-900 text-blue-300 px-2 py-1 rounded hover:bg-blue-800">
+                                    <i class="fas fa-question mr-1"></i>Ask Ripple
+                                </button>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <textarea rows="2" placeholder="Message Ripple Copilot or @mention collaborators..." 
+                                   class="w-full card-bg text-sm text-white px-3 py-2 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 border border-gray-800 resize-none"></textarea>
+                            <div class="absolute right-2 bottom-2 flex space-x-1">
+                                <button class="text-gray-400 hover:text-white">
+                                    <i class="fas fa-paperclip"></i>
+                                </button>
+                                <button class="text-gray-400 hover:text-white">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                                <button class="text-blue-400 hover:text-blue-300">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel - Collaboration Tools (Simplified) -->
+            <div class="w-64 flex flex-col overflow-hidden">
+                <div class="sidebar-bg px-4 py-3 border-b border-gray-800">
+                    <div class="text-sm font-medium">TEAM</div>
+                </div>
+                <div class="flex-1 overflow-y-auto p-4">
+                    <div class="mb-6">
+                        <div class="text-xs text-gray-400 mb-2">ACTIVE COLLABORATORS</div>
+                        <div class="space-y-2">
+                            <div class="flex items-center p-2 rounded hover:bg-gray-800 cursor-pointer">
+                                <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center mr-2 text-xs text-white">YC</div>
+                                <div class="text-sm truncate">You (Lead)</div>
+                            </div>
+                            <div class="flex items-center p-2 rounded hover:bg-gray-800 cursor-pointer">
+                                <div class="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center mr-2 text-xs text-white">MC</div>
+                                <div class="text-sm truncate">Dr. Chen</div>
+                            </div>
+                            <div class="flex items-center p-2 rounded hover:bg-gray-800 cursor-pointer">
+                                <div class="w-6 h-6 rounded-full bg-purple-500 flex items-center justify-center mr-2 text-xs text-white">JR</div>
+                                <div class="text-sm truncate">Prof. Rodriguez</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="text-xs text-gray-400 mb-2">RIPPLE COPILOT TOOLS</div>
+                        <div class="space-y-2">
+                            <button class="w-full flex items-center text-xs bg-blue-900 hover:bg-blue-800 text-blue-300 px-3 py-2 rounded">
+                                <i class="fas fa-chart-line mr-2"></i>
+                                <span>Data Analysis</span>
+                            </button>
+                            <button class="w-full flex items-center text-xs bg-blue-900 hover:bg-blue-800 text-blue-300 px-3 py-2 rounded">
+                                <i class="fas fa-book mr-2"></i>
+                                <span>Literature Review</span>
+                            </button>
+                            <button class="w-full flex items-center text-xs bg-blue-900 hover:bg-blue-800 text-blue-300 px-3 py-2 rounded">
+                                <i class="fas fa-lightbulb mr-2"></i>
+                                <span>Research Insights</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="text-xs text-gray-400 mb-2">SHARED RESOURCES</div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="card-bg p-2 rounded border border-gray-800 flex flex-col items-center cursor-pointer hover:border-blue-500">
+                                <i class="fas fa-file-alt text-blue-400 text-xl mb-1"></i>
+                                <span class="text-xs text-center">Data</span>
+                            </div>
+                            <div class="card-bg p-2 rounded border border-gray-800 flex flex-col items-center cursor-pointer hover:border-blue-500">
+                                <i class="fas fa-book text-blue-400 text-xl mb-1"></i>
+                                <span class="text-xs text-center">Lit</span>
+                            </div>
+                            <div class="card-bg p-2 rounded border border-gray-800 flex flex-col items-center cursor-pointer hover:border-blue-500">
+                                <i class="fas fa-chart-bar text-blue-400 text-xl mb-1"></i>
+                                <span class="text-xs text-center">Analysis</span>
+                            </div>
+                            <div class="card-bg p-2 rounded border border-gray-800 flex flex-col items-center cursor-pointer hover:border-blue-500">
+                                <i class="fas fa-comments text-blue-400 text-xl mb-1"></i>
+                                <span class="text-xs text-center">Notes</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="sidebar-bg border-t border-gray-800 px-4 py-1 flex items-center justify-between text-xs text-gray-400">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center">
+                    <div class="w-2 h-2 rounded-full bg-blue-500 mr-1 ripple-pulse"></div>
+                    <span>Ripple Copilot: Active</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-users text-gray-500 mr-1"></i>
+                    <span>3 collaborators online</span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div>Last sync: Just now</div>
+                <div>Project: AI Ethics Study</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulate chat functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatInput = document.querySelector('textarea');
+            const chatContainer = document.querySelector('.flex-1.overflow-y-auto.mb-4');
+            
+            // Send message on Enter key (but not Shift+Enter)
+            chatInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+            
+            // Quick action buttons
+            document.querySelectorAll('.bg-blue-900').forEach(button => {
+                button.addEventListener('click', function() {
+                    const action = this.textContent.trim();
+                    if (action.includes("Analyze data")) {
+                        simulateCopilotResponse("I can analyze any dataset you provide. Would you like me to examine the survey results or the experimental data?");
+                    } else if (action.includes("Find literature")) {
+                        simulateCopilotResponse("I can search our literature database. What topic or keywords should I focus on?");
+                    } else if (action.includes("Get insights")) {
+                        simulateCopilotResponse("Based on our current data, I'm noticing some interesting patterns in demographic responses. Would you like me to elaborate?");
+                    } else if (action.includes("Ask Ripple")) {
+                        chatInput.value = "What can you help me with?";
+                        chatInput.focus();
+                    }
+                });
+            });
+            
+            function sendMessage() {
+                const message = chatInput.value.trim();
+                if (message) {
+                    // Add user message to chat
+                    const userBubble = document.createElement('div');
+                    userBubble.className = 'chat-bubble user-bubble';
+                    userBubble.innerHTML = `
+                        <div class="font-medium mb-1">You</div>
+                        <p>${message}</p>
+                    `;
+                    chatContainer.appendChild(userBubble);
+                    
+                    // Clear input
+                    chatInput.value = '';
+                    
+                    // Simulate Ripple Copilot response after a delay
+                    setTimeout(() => {
+                        simulateCopilotResponse("I've processed your request. Here are the results...");
+                    }, 1000);
+                    
+                    // Scroll to bottom
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }
+            }
+            
+            function simulateCopilotResponse(message) {
+                const copilotBubble = document.createElement('div');
+                copilotBubble.className = 'chat-bubble copilot-bubble';
+                copilotBubble.innerHTML = `
+                    <div class="font-medium mb-1 flex items-center text-blue-400">
+                        <i class="fas fa-robot mr-2"></i>
+                        Ripple Copilot
+                    </div>
+                    <p>${message}</p>
+                    <div class="mt-3 flex flex-wrap gap-2">
+                        <button class="text-xs bg-blue-900 text-blue-300 px-2 py-1 rounded hover:bg-blue-800">
+                            Show details
+                        </button>
+                        <button class="text-xs bg-blue-900 text-blue-300 px-2 py-1 rounded hover:bg-blue-800">
+                            Suggest next steps
+                        </button>
+                    </div>
+                `;
+                chatContainer.appendChild(copilotBubble);
+                
+                // Add event listeners to new buttons
+                copilotBubble.querySelectorAll('button').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        if (this.textContent.includes("Show details")) {
+                            simulateCopilotResponse("Here are more detailed findings from my analysis...");
+                        } else if (this.textContent.includes("Suggest next steps")) {
+                            simulateCopilotResponse("Based on these results, I recommend: 1) Expanding the survey sample, 2) Conducting follow-up interviews, 3) Comparing with international studies");
+                        }
+                    });
+                });
+                
+                // Scroll to bottom
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+            
+            // Make team members clickable for chat
+            document.querySelectorAll('.hover\\:bg-gray-800').forEach(member => {
+                member.addEventListener('click', function() {
+                    const memberName = this.querySelector('.text-sm').textContent.split(' ')[0];
+                    chatInput.value = `@${memberName} `;
+                    chatInput.focus();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
