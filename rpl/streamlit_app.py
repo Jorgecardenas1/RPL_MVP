@@ -17,7 +17,7 @@ ICON_SVG = {
     "assistant": "🤖",
 }
 
-with open("logo.png", "rb") as img_file:
+with open("rpl/logo2.png", "rb") as img_file:
     b64_string = base64.b64encode(img_file.read()).decode()
 
 # Custom CSS for VSCode-like look
