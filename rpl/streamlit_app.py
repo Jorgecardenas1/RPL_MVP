@@ -285,7 +285,7 @@ st.markdown(
 
 # --- SIDEBAR: Projects and Experiments ---
 with st.sidebar:
-    st.image("logo2.png", width=100)
+    st.image("rpl.logo2.png", width=100)
     st.title("📁 Projects")
 
     all_projects = store.data.get("projects", {})
