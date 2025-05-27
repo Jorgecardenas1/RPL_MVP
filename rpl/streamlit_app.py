@@ -367,9 +367,6 @@ if (chatContainer) {
 """, unsafe_allow_html=True)
 
 
-if not st.session_state.chat_history:
-    st.markdown("💬 No messages yet. Start chatting with Ripple Copilot.")
-
 
 # Chat input with loading state
 with st.form(key="chat_form", clear_on_submit=True):
