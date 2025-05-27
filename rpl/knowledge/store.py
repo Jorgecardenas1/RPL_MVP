@@ -99,3 +99,18 @@ class KnowledgeStore:
         if experiments:
             return experiments[-1]  # latest experiment
         return None
+
+    def delete_project(self, project_name):
+        if project_name in self.data["projects"]:
+            del self.data["projects"][project_name]
+
+            # Optionally: remove experiments from global list
+            self.data["experiments"] = [
+                exp for exp in self.data["experiments"]
+                if exp.get("project") != project_name
+            ]
+
+            self._save(self.data)
+            return {"status": "success", "message": f"Project '{project_name}' deleted."}
+        else:
+            return {"status": "error", "message": f"Project '{project_name}' not found."}

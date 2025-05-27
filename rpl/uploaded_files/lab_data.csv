@@ -1,0 +1,4 @@
+material,permittivity,frequency_ghz,project,simulator
+PLA,2.7,5.0,Astranis Satellite,HFSS
+ABS,2.9,10.0,Waveguide_Y,HFSS
+PETG,2.8,2.4,Filter_Z,COMSOL

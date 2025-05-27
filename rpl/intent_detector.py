@@ -51,6 +51,16 @@ class IntentDetector:
 
         # Optional: clean triple backticks if needed
         content_str = self.extract_json_from_response(content_str)
+        
+
+        if not content_str:
+            return {
+                "intent": "error",
+                "data": {"error": "No content returned from model."}
+            }
+
+      
+        print("[IntentDetector] Raw model response content:", content_str)
 
         try:
             parsed = json.loads(content_str)

@@ -8,6 +8,7 @@ class UploadFileHandler(BaseHandler):
         file_name = data.get("file_name")
 
         # Check required fields
+        
         if not project or not file_name:
             return {
                 "status": "error",
