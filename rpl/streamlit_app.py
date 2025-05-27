@@ -283,10 +283,11 @@ st.markdown(
 
 # --- SIDEBAR: Projects and Experiments ---
 with st.sidebar:
-    st.image("https://rplmvp001.s3.us-east-2.amazonaws.com/src/logo2.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIARTWFHYDTXHOEI6GK%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T204321Z&X-Amz-Expires=300&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEIX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMiJGMEQCIDNvBbHX5WSQvRwaQ8pCssoJEmnMOxsE6X%2F%2BgERTQ8IeAiA4Aee7z3TOZtGkdk5ZFb0LtyOKJe2KEq89qIS7A7vK%2FSqZAghOEAAaDDExMTAwOTA1NDk1MSIMNHm8LakupJRvLT0kKvYBhSPkSvG0SnA9xlv3Tw%2Ft1RMMKFYrpI0yv8SwR%2BgrHu%2B8bpkvOM9P0Kp3nyyafr%2Bg96EE5Bhv%2BTCxzc%2Bp8Gh8Q6HnR4H7ynhsbnaK9R504zOEQvzDOUEHp6IHFsvq%2BshFOLXjVcwXNgZ7OgKwXgEH1EDp09ktS8eS8reUxVf6%2FVP6dN6hYuTB9b0oCTV3Sn5%2Fp75GN4iEqjS2H4zK96fqfSR6VeYas5NXznvInrH0PVP70VQhlrcjyqLpHLe%2BmZnrPVQjt4%2FRf6aQiLMrhmYL7NBMMzCYwCrKWRkqD12ArSkABy4DviVEDWQ1nrCBaBVml6t5aqn%2BMNug08EGOuAB7waRr2JGzoFTcOrpHUHvRyKD3Ho1doo68ns3vSbI277zVDiTAYC4iGSnp4IQSBXBdY6yMP8VPvufEnyobTJ2hAVyhGVh8WTkcV4LCqKrQ8Ba0GgJVtJa3rDF8AY8Wvg0PTfJZe3W8ihQmSwHuzuA8NDwh8oJ0cRoadVgGWXxx%2BGZUMluDWxQlCQnlXgUg54oYzMbL0WC6q4nnvhxEA813Ifz32kxFh8a0AJr4cqwRQQYGul0vHFJsJDhJ3t9kZdMJHG4oVErlLPPmcsdd311e6XqVL81yMs%2FEmfg3QooJGI%3D&X-Amz-Signature=94c61dfc0e8984de9c9c4ef0e57d3326efe7e765f7c5457cc916d24d4dee57c0&X-Amz-SignedHeaders=host&response-content-disposition=inline", width=100)
+    st.image("https://rplmvpbucket.s3.us-east-2.amazonaws.com/logo2.png", width=100)
     st.title("📁 Projects")
 
     all_projects = store.data.get("projects", {})
+
 
     if not all_projects:
         st.markdown("Create one to get started!")
