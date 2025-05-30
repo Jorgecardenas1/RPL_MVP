@@ -16,7 +16,7 @@ class IntentDetector:
     def detect(self, user_input):
         url = "https://api.groq.com/openai/v1/chat/completions"
         headers = {
-            "Authorization": f"Bearer {GROQ_API_KEY}",
+            "Authorization": f"Bearer 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",
             "Content-Type": "application/json"
         }
 
