@@ -1,4 +1,61 @@
 {
-  "projects": {},
-  "experiments": []
+  "projects": {
+    "Astronomy 101": {
+      "description": "",
+      "created_at": "2025-05-28T15:26:05.175258",
+      "experiments": [
+        {
+          "timestamp": "2025-05-28T15:31:24.211124",
+          "project": "Astronomy 101",
+          "name": "Permittivity Experiment",
+          "description": "Experiment done today regarding the idea of permittivity",
+          "version": "1.0",
+          "results": "",
+          "results_file": [
+            null
+          ]
+        },
+        {
+          "timestamp": "2025-05-30T15:58:33.838905",
+          "project": "Astronomy 101",
+          "name": "permittivity",
+          "description": "Experiment done today regarding the idea of permittivity",
+          "version": "1.0",
+          "results": "",
+          "results_file": [
+            null
+          ]
+        }
+      ]
+    },
+    "astronomy 1": {
+      "description": "project dedicated to testing new methods",
+      "created_at": "2025-05-30T15:58:43.201472",
+      "experiments": []
+    }
+  },
+  "experiments": [
+    {
+      "timestamp": "2025-05-28T15:31:24.211124",
+      "project": "Astronomy 101",
+      "name": "Permittivity Experiment",
+      "description": "Experiment done today regarding the idea of permittivity",
+      "version": "1.0",
+      "results": "",
+      "results_file": [
+        null
+      ]
+    },
+    {
+      "timestamp": "2025-05-30T15:58:33.838905",
+      "project": "Astronomy 101",
+      "name": "permittivity",
+      "description": "Experiment done today regarding the idea of permittivity",
+      "version": "1.0",
+      "results": "",
+      "results_file": [
+        null
+      ]
+    }
+  ]
 }

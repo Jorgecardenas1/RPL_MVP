@@ -27,23 +27,3 @@ class LogExperimentHandler(BaseHandler):
             timestamp=timestamp
         )
 
-
-        project = data.get("project")
-        description = data.get("description", "") or data.get("notes", "")
-        file_name = data.get("results_file", None)
-        version = data.get("version", "v1")
-        timestamp = data.get("timestamp")
-
-        if not self.store.project_exists(project):
-            return {
-                "status": "error",
-                "message": f"Project '{project}' not found. Please create it first."
-            }
-
-        return self.store.log_experiment(
-            project=project,
-            description=description,
-            results_file=file_name,
-            version=version,
-            timestamp=timestamp
-        )
