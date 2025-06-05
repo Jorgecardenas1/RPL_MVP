@@ -3,11 +3,11 @@ import os
 import json
 import re
 from pathlib import Path
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 
-# dotenv_path = Path('./.env')
+dotenv_path = Path('./.env')
 
-# load_dotenv(dotenv_path=dotenv_path)
+load_dotenv(dotenv_path=dotenv_path)
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")  # Or paste directly (not recommended)
 MODEL = "llama3-8b-8192"
@@ -16,7 +16,7 @@ class IntentDetector:
     def detect(self, user_input):
         url = "https://api.groq.com/openai/v1/chat/completions"
         headers = {
-            "Authorization": f"Bearer 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",
+            "Authorization": f"Bearer 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",
             "Content-Type": "application/json"
         }
 
